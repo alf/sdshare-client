@@ -1,0 +1,6 @@
+.classpath
+.project
+*.iml
+.settings
+
+sdshare-client-config

@@ -1,0 +1,17 @@
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:sdshare="http://www.egovpt.org/sdshare">
+  <title>Fragments feed for beer.xtm</title>
+  <updated>2011-01-12T19:22:45Z</updated>
+  <author>
+    <name>Ontopia SDshare server</name>
+  </author>
+  <id>file:/Users/larsga/data/topicmaps/beer.xtm/fragments</id>
+  <sdshare:ServerSrcLocatorPrefix>file:/Users/larsga/data/topicmaps/beer.xtm</sdshare:ServerSrcLocatorPrefix>
+  <entry>
+    <title>Topic with object ID 4519</title>
+    <updated>2011-01-12T19:21:44Z</updated>
+    <id>file:/Users/larsga/data/topicmaps/beer.xtm/4519/1294860101302</id>
+    <link href="fragment.jsp?topicmap=beer.xtm&amp;topic=4519&amp;syntax=rdf" type="application/rdf+xml" rel="alternate"></link>
+    <link href="fragment.jsp?topicmap=beer.xtm&amp;topic=4519&amp;syntax=xtm" type="application/x-tm+xml; version=1.0" rel="alternate"></link>
+    <sdshare:TopicSI>http://example.org/9</sdshare:TopicSI>
+  </entry>
+</feed>

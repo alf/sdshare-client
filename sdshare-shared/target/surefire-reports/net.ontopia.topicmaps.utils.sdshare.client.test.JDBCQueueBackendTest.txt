@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: net.ontopia.topicmaps.utils.sdshare.client.test.JDBCQueueBackendTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.234 sec

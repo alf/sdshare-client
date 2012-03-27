@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:sdshare="http://www.egovpt.org/sdshare">
+  <title>duplicates</title>
+  <id>http://localhost:8080/duke-sdshare/duke/collections</id>
+  <updated>2011-09-21T10:33:41.654Z</updated>
+  <link href="http://localhost:8080/duke-sdshare/duke/collections?collectionId=duplicates" rel="self"/>
+  <author>
+    <name>Duke SDshare Server</name>
+  </author>
+  <entry>
+    <id>uuid:92d59326-6a08-478d-b914-28f588ae81f5</id>
+    <title>duplicates Fragments</title>
+    <updated>2011-09-21T10:33:41.654Z</updated>
+    <link href="fragment-1.xml" type="application/atom+xml" rel="http://www.egovpt.org/sdshare/fragmentsfeed"/>
+    <link href="fragment-1.xml" type="application/atom+xml" rel="alternate"/>
+    <link href="fragment-1.xml"/>
+    <author>
+      <name>Duke SDshare Server</name>
+    </author>
+  </entry>
+  <entry>
+    <id>uuid:f2be7615-526a-4943-bff0-a7768e7943ea</id>
+    <title>duplicates Snapshots</title>
+    <updated>2011-09-21T10:33:41.654Z</updated>
+    <link href="snapshot-1.xml" type="application/atom+xml" rel="http://www.egovpt.org/sdshare/snapshotsfeed"/>
+    <link href="snapshot-1.xml" type="application/atom+xml" rel="alternate"/>
+    <link href="snapshot-1.xml"/>
+    <author>
+      <name>Duke SDshare Server</name>
+    </author>
+  </entry>
+</feed>

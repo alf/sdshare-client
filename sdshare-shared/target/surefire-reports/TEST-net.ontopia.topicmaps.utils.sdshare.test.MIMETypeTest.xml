@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="0.003" errors="0" skipped="0" tests="11" name="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
+    <property name="java.vm.version" value="20.4-b02-402"/>
+    <property name="awt.nativeDoubleBuffering" value="true"/>
+    <property name="gopherProxySet" value="false"/>
+    <property name="mrj.build" value="11D50b"/>
+    <property name="java.vm.vendor" value="Apple Inc."/>
+    <property name="java.vendor.url" value="http://www.apple.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared"/>
+    <property name="java.runtime.version" value="1.6.0_29-b11-402-11D50b"/>
+    <property name="java.awt.graphicsenv" value="apple.awt.CGraphicsEnvironment"/>
+    <property name="basedir" value="/Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared"/>
+    <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="surefire.real.class.path" value="/Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared/target/surefire/surefirebooter5003402132813406757.jar"/>
+    <property name="java.io.tmpdir" value="/var/folders/h1/r91c58j129bbbv0k2lssrb6c07145h/T/"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="sun.jnu.encoding" value="MacRoman"/>
+    <property name="java.library.path" value="/Applications/IntelliJ IDEA 11.app/Contents/Resources/Java:/System/Library/PrivateFrameworks/JavaApplicationLauncher.framework/Resources:.:/Users/arne-richard.hofsoy/Library/Java/Extensions:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
+    <property name="surefire.test.class.path" value="/Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared/target/test-classes:/Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared/target/classes:/Users/arne-richard.hofsoy/.m2/repository/junit/junit/4.7/junit-4.7.jar:/Users/arne-richard.hofsoy/.m2/repository/com/hp/hpl/jena/jena/2.6.2/jena-2.6.2.jar:/Users/arne-richard.hofsoy/.m2/repository/com/hp/hpl/jena/iri/0.7/iri-0.7.jar:/Users/arne-richard.hofsoy/.m2/repository/com/ibm/icu/icu4j/3.4.4/icu4j-3.4.4.jar:/Users/arne-richard.hofsoy/.m2/repository/xerces/xercesImpl/2.7.1/xercesImpl-2.7.1.jar:/Users/arne-richard.hofsoy/.m2/repository/log4j/log4j/1.2.13/log4j-1.2.13.jar:/Users/arne-richard.hofsoy/.m2/repository/com/h2database/h2/1.3.153/h2-1.3.153.jar:/Users/arne-richard.hofsoy/.m2/repository/org/apache/httpcomponents/httpclient/4.1.1/httpclient-4.1.1.jar:/Users/arne-richard.hofsoy/.m2/repository/org/apache/httpcomponents/httpcore/4.1/httpcore-4.1.jar:/Users/arne-richard.hofsoy/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/Users/arne-richard.hofsoy/.m2/repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar:/Users/arne-richard.hofsoy/.m2/repository/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar:/Users/arne-richard.hofsoy/.m2/repository/org/slf4j/slf4j-log4j12/1.5.6/slf4j-log4j12-1.5.6.jar:/Users/arne-richard.hofsoy/.m2/repository/org/slf4j/slf4j-log4j13/1.0.1/slf4j-log4j13-1.0.1.jar:/Users/arne-richard.hofsoy/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar:/Users/arne-richard.hofsoy/.m2/repository/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar:/Users/arne-richard.hofsoy/.m2/repository/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar:"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="50.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.7.3"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="user.home" value="/Users/arne-richard.hofsoy"/>
+    <property name="user.timezone" value="Europe/Oslo"/>
+    <property name="java.awt.printerjob" value="apple.awt.CPrinterJob"/>
+    <property name="java.specification.version" value="1.6"/>
+    <property name="file.encoding" value="MacRoman"/>
+    <property name="user.name" value="arne-richard.hofsoy"/>
+    <property name="java.class.path" value="/Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared/target/test-classes:/Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared/target/classes:/Users/arne-richard.hofsoy/.m2/repository/junit/junit/4.7/junit-4.7.jar:/Users/arne-richard.hofsoy/.m2/repository/com/hp/hpl/jena/jena/2.6.2/jena-2.6.2.jar:/Users/arne-richard.hofsoy/.m2/repository/com/hp/hpl/jena/iri/0.7/iri-0.7.jar:/Users/arne-richard.hofsoy/.m2/repository/com/ibm/icu/icu4j/3.4.4/icu4j-3.4.4.jar:/Users/arne-richard.hofsoy/.m2/repository/xerces/xercesImpl/2.7.1/xercesImpl-2.7.1.jar:/Users/arne-richard.hofsoy/.m2/repository/log4j/log4j/1.2.13/log4j-1.2.13.jar:/Users/arne-richard.hofsoy/.m2/repository/com/h2database/h2/1.3.153/h2-1.3.153.jar:/Users/arne-richard.hofsoy/.m2/repository/org/apache/httpcomponents/httpclient/4.1.1/httpclient-4.1.1.jar:/Users/arne-richard.hofsoy/.m2/repository/org/apache/httpcomponents/httpcore/4.1/httpcore-4.1.jar:/Users/arne-richard.hofsoy/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/Users/arne-richard.hofsoy/.m2/repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar:/Users/arne-richard.hofsoy/.m2/repository/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar:/Users/arne-richard.hofsoy/.m2/repository/org/slf4j/slf4j-log4j12/1.5.6/slf4j-log4j12-1.5.6.jar:/Users/arne-richard.hofsoy/.m2/repository/org/slf4j/slf4j-log4j13/1.0.1/slf4j-log4j13-1.0.1.jar:/Users/arne-richard.hofsoy/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar:/Users/arne-richard.hofsoy/.m2/repository/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar:/Users/arne-richard.hofsoy/.m2/repository/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar:"/>
+    <property name="java.vm.specification.version" value="1.0"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"/>
+    <property name="sun.java.command" value="/Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared/target/surefire/surefirebooter5003402132813406757.jar /Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared/target/surefire/surefire2097539723175243535tmp /Users/arne-richard.hofsoy/Desktop/sesam/sdshare/sdshare-client-parent/sdshare-shared/target/surefire/surefire6080590373056121592tmp"/>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="apple.awt.CToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.6.0_29"/>
+    <property name="java.ext.dirs" value="/Users/arne-richard.hofsoy/Library/Java/Extensions:/Library/Java/Extensions:/System/Library/Java/Extensions:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext"/>
+    <property name="sun.boot.class.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar"/>
+    <property name="java.vendor" value="Apple Inc."/>
+    <property name="localRepository" value="/Users/arne-richard.hofsoy/.m2/repository"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.apple.com/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="mrj.version" value="1070.1.6.0_29-402"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase time="0" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testBasic"/>
+  <testcase time="0" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseSimple"/>
+  <testcase time="0" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseVersion"/>
+  <testcase time="0.001" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseVersionNoSpace"/>
+  <testcase time="0" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseVersionLotsOfSpaces"/>
+  <testcase time="0" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseVersionMalformed"/>
+  <testcase time="0" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseVersionMalformed2"/>
+  <testcase time="0.001" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseVersionMalformed3"/>
+  <testcase time="0" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseVersionMalformed4"/>
+  <testcase time="0" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseVersionMalformed5"/>
+  <testcase time="0" classname="net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest" name="testParseCharset"/>
+</testsuite>

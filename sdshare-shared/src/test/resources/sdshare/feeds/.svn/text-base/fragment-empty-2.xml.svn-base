@@ -1,0 +1,9 @@
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:sdshare="http://www.egovpt.org/sdshare">
+  <title>Fragments feed for beer.xtm</title>
+  <updated>2011-01-07T10:14:37+0100</updated>
+  <author>
+    <name>Ontopia SDshare server</name>
+  </author>
+  <id>file:/Users/larsga/data/topicmaps/beer.xtm/fragments</id>
+  <sdshare:ServerSrcLocatorPrefix>file:/Users/larsga/data/topicmaps/beer.xtm</sdshare:ServerSrcLocatorPrefix>
+</feed>

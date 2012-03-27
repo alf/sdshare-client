@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:sdshare="http://www.egovpt.org/sdshare">
+  <title>Snapshots for graph &lt;duplicates&gt;</title>
+  <id>uuid:8e7cf805-8ecd-4e67-a24b-40272cec570f</id>
+  <updated>2011-09-21T12:37:41.917Z</updated>
+  <link href="http://localhost:8080/duke-sdshare/duke/snapshots?collectionId=duplicates" rel="self"/>
+  <author>
+    <name>Duke SDshare Server</name>
+  </author>
+  <sdshare:ServerSrcLocatorPrefix>http://psi.hafslund.no/sesam/duke/data</sdshare:ServerSrcLocatorPrefix>
+  <entry>
+    <id>uuid:8936698a-55f3-4c94-a4d7-f053d573bf28</id>
+    <title>Current state of duplicate set</title>
+    <updated>2011-09-21T12:37:42.065Z</updated>
+    <link href="some-snapshot.rdf" type="application/rdf+xml" rel="alternate"/>
+    <link href="some-snapshot.rdf"/>
+  </entry>
+</feed>

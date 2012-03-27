@@ -1,0 +1,50 @@
+<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:sdshare="http://www.egovpt.org/sdshare">
+  <title>Push feed for beer.xtm</title>
+  <updated>2011-01-28T09:50:45Z</updated>
+  <author>
+    <name>Ontopia SDshare push client</name>
+  </author>
+  <id>file:/Users/larsga/data/topicmaps/beer.xtm/push</id>
+  <sdshare:ServerSrcLocatorPrefix>file:/Users/larsga/data/topicmaps/beer.xtm</sdshare:ServerSrcLocatorPrefix>
+  <entry>
+    <title>Topic with object ID 4518</title>
+    <updated>2011-01-28T09:51:41Z</updated>
+    <id>file:/Users/larsga/data/topicmaps/beer.xtm/4518/1294860101302</id>
+    <content type="application/x-tm+xml; version=1.0">
+      <topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+        <topic id="t2821">
+          <instanceOf>
+            <subjectIndicatorRef xlink:href="http://psi.garshol.priv.no/beer/pub"></subjectIndicatorRef>
+          </instanceOf>
+          <subjectIdentity>
+            <subjectIndicatorRef xlink:href="http://example.org/11"></subjectIndicatorRef>
+            <topicRef xlink:href="file:/Users/larsga/data/topicmaps/beer.xtm#t2821"></topicRef>
+          </subjectIdentity>
+          <baseName>
+            <baseNameString>Cafe Ledig Erf</baseNameString>
+          </baseName>
+        </topic>
+        <association>
+          <instanceOf>
+            <subjectIndicatorRef xlink:href="http://psi.garshol.priv.no/beer/located-in"></subjectIndicatorRef>
+          </instanceOf>
+          <member>
+            <roleSpec>
+              <subjectIndicatorRef xlink:href="http://psi.garshol.priv.no/beer/location"></subjectIndicatorRef>
+            </roleSpec>
+            <subjectIndicatorRef xlink:href="http://dbpedia.org/resource/Utrecht"></subjectIndicatorRef>
+          </member>
+          <member>
+            <roleSpec>
+              <subjectIndicatorRef xlink:href="http://psi.garshol.priv.no/beer/located"></subjectIndicatorRef>
+            </roleSpec>
+            <subjectIndicatorRef xlink:href="http://example.org/11"></subjectIndicatorRef>
+          </member>
+        </association>
+      </topicMap>
+    </content>
+    <sdshare:TopicSI>http://example.org/11</sdshare:TopicSI>
+  </entry>
+</feed>

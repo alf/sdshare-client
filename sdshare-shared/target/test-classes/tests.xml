@@ -1,0 +1,15 @@
+
+<test-collection>
+
+  <group>
+    <name>sdshare</name>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.TopicMapTrackerTest</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.FeedReaderTest</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.PushTestGenerator</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.PushBackendTest</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.client.test.JDBCQueueBackendTest</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.client.test.AtomFrontendTest</test>
+  </group>
+
+</test-collection>

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/2216/sandbox/sdshare/src/test-data/sdshare/feeds
+END
+fragment-paged-2.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/2216/sandbox/sdshare/src/test-data/sdshare/feeds/fragment-paged-2.xml
+END
+fragment-paged.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/2167/sandbox/sdshare/src/test-data/sdshare/feeds/fragment-paged.xml
+END
+fragment-1.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/2167/sandbox/sdshare/src/test-data/sdshare/feeds/fragment-1.xml
+END
+collection-simple.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/2216/sandbox/sdshare/src/test-data/sdshare/feeds/collection-simple.xml
+END
+collection-paged.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/2216/sandbox/sdshare/src/test-data/sdshare/feeds/collection-paged.xml
+END
+fragment-precise.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/2167/sandbox/sdshare/src/test-data/sdshare/feeds/fragment-precise.xml
+END
+snapshot-1.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/2216/sandbox/sdshare/src/test-data/sdshare/feeds/snapshot-1.xml
+END
+push-1.xml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/2167/sandbox/sdshare/src/test-data/sdshare/feeds/push-1.xml
+END
+fragment-empty-2.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/2167/sandbox/sdshare/src/test-data/sdshare/feeds/fragment-empty-2.xml
+END
+fragment-empty.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/2167/sandbox/sdshare/src/test-data/sdshare/feeds/fragment-empty.xml
+END
