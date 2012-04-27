@@ -26,16 +26,18 @@ public class JDBCQueueBackendTest extends AbstractOntopiaTestCase {
   }
 
   public void setUp() throws SQLException {
-    endpoint = new SyncEndpoint("jdbc:h2:mem");
+    endpoint = new SyncEndpoint("jdbc:h2:mem:db1");
     endpoint.setProperty("driver-class", "org.h2.Driver");
     endpoint.setProperty("database", "h2");
 
     backend = new JDBCQueueBackend();
-
     stmt = getConnection(endpoint);
-    stmt.executeUpdate("delete from UPDATED_RESOURCES"); // empty DB
   }
 
+  public void tearDown() throws SQLException {
+    stmt.executeUpdate("delete from UPDATED_RESOURCES"); // empty DB
+  }
+  
   // FIXME: can't test snapshot, because it doesn't work...
 
   public void testEmpty() throws SQLException {
