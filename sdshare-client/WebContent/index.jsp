@@ -68,6 +68,7 @@ td, th { padding-right: 6pt }
   int ix = 0;
   for (SyncEndpoint endpoint : cconfig.getEndpoints()) { %>
     <h2><%= endpoint.getHandle() %></h2>
+    <p><%= endpoint.getBackend() %></p>
 
     <table>
     <tr><th>Source <th>Last change <th>Last sync <th>Fragments

@@ -27,10 +27,8 @@
 
     if (request.getParameter("clear" + ix) != null)
       source.clearError();
-    else if (request.getParameter("snapshot" + ix) != null) {
-      SyncEndpoint endpoint = source.getEndpoint();
-      endpoint.loadSnapshot(source);
-    }
+    else if (request.getParameter("snapshot" + ix) != null)
+      manager.loadSnapshot(source);
   }
 
   response.sendRedirect("index.jsp");

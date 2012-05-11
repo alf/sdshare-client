@@ -104,14 +104,20 @@ class SyncThread extends Thread {
   // --- THE ACTUAL OPERATIONS
 
   public void loadSnapshots() throws IOException, SAXException {
-    for (SyncEndpoint endpoint : endpoints) {
-      ClientBackendIF thebackend = endpoint.getBackend();
-      if (thebackend == null)
-        thebackend = backend;
-      
-      log.info("Getting snapshots for " + endpoint.getHandle());
-      for (SyncSource source : endpoint.getSources())
-        endpoint.loadSnapshot(source);
+    for (SyncEndpoint endpoint : endpoints) 
+      loadSnapshot(endpoint);
+  }
+
+  public void loadSnapshot(SyncEndpoint endpoint)
+    throws IOException, SAXException {
+    ClientBackendIF thebackend = endpoint.getBackend();
+    if (thebackend == null)
+      thebackend = backend;
+    
+    log.info("Getting snapshots for " + endpoint.getHandle());
+    for (SyncSource source : endpoint.getSources()) {
+      Snapshot snapshot = endpoint.loadSnapshot(source);
+      backend.loadSnapshot(endpoint, snapshot);
     }
   }
 

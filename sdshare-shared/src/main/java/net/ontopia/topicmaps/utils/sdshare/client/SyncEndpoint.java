@@ -60,10 +60,9 @@ public class SyncEndpoint {
     this.backend = backend;
   }
 
-  public void loadSnapshot(SyncSource source) throws IOException, SAXException {
+  public Snapshot loadSnapshot(SyncSource source) throws IOException, SAXException {
     log.info("Loading snapshot from " + source.getHandle());        
     SnapshotFeed feed = source.getSnapshotFeed();
-    Snapshot snapshot = feed.getSnapshots().get(0);
-    backend.loadSnapshot(this, snapshot);
+    return feed.getSnapshots().get(0);
   }
 }

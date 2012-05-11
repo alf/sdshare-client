@@ -86,7 +86,8 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     MIMEType mimetype = link.getMIMEType();
     // FIXME: this is too simplistic. we could probably support more
     // syntaxes than just this one, but for now this will have to do.
-    if (mimetype.getType() != null &&
+    if (mimetype != null &&
+        mimetype.getType() != null &&
         mimetype.getType().equals("application/rdf+xml"))
       return 100;
     return 0;
