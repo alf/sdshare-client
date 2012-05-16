@@ -33,6 +33,9 @@ import net.ontopia.topicmaps.utils.rdf.RDFUtils;
 
 /**
  * INTERNAL: Backend which uses SPARQL to update an RDF triple store.
+ * This class implements the 2012-01-05 SPARQL working drafts from the
+ * W3C. A separate subclass implements the dialect supported by
+ * Virtuoso.
  */
 public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
   static Logger log = LoggerFactory.getLogger(SparqlBackend.class.getName());
@@ -64,23 +67,19 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
                                         fragment.getTopicSIs().size() +
                                         " SIs, which we cannot handle");
     String subject = fragment.getTopicSIs().iterator().next();
-
-    // WARN: this is the Virtuoso dialect of SPARQL Update, so these
-    // queries will probably only work on Virtuoso. need to add a
-    // property so that one can configure what SPARQL Update dialect
-    // to use.
     
     // first, remove all statements about the current topic
     doUpdate(endpoint.getHandle(),
-             // http://sourceforge.net/mailarchive/forum.php?thread_name=7DF4AA0F-2DAD-4A58-B3D5-1081CA05D94A%40openlinksw.com&forum_name=virtuoso-users
-             "DEFINE  sql:log-enable 2 " +
-             "delete from <" + graph + "> " +
-             "  { <" + subject + "> ?p ?v } " +
-             "where " +
-             "  { <" + subject + "> ?p ?v }");
+             makeDeleteStatement(graph, subject));
     
     // second, load new fragment into graph
     insertDataFrom(uri, endpoint.getHandle(), graph);
+  }
+
+  protected String makeDeleteStatement(String graph, String subject) {
+    return "WITH <" + graph + "> " +
+           "DELETE { <" + subject +"> ?p ?o } " +
+           "WHERE { <" + subject +"> ?p ?o } ";
   }
 
   // ===== Implementation code
@@ -96,7 +95,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     return 0;
   }
 
-  public static void insertDataFrom(String sourceuri, String targeturi,
+  public void insertDataFrom(String sourceuri, String targeturi,
                                     String graphuri) {
     InsertHandler handler = new InsertHandler(targeturi, graphuri);
     try {
@@ -107,7 +106,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     }
   }
   
-  public static void doUpdate(String endpoint, String statement) {    
+  public void doUpdate(String endpoint, String statement) {    
     try {
       doUpdate_(endpoint, statement);
     } catch (IOException e) {
@@ -115,21 +114,16 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     }
   }
   
-  public static void doUpdate_(String endpoint, String statement) throws IOException {
+  public void doUpdate_(String endpoint, String statement) throws IOException {
     if (log.isDebugEnabled())
       log.debug("doUpdate: " + statement);
 
     // FIXME: in time we may have to use Keep-Alive so that we don't
     // need to open new TCP connections all the time.
     
-    // WARN: it doesn't look like the SPARQL spec actually describes
-    // the update protocol, but we can probably guess what it looks
-    // like. so this is based on a kind of reverse-engineering of the
-    // protocol by guesswork.
-
     // (1) putting together the request
     statement = URLEncoder.encode(statement, "utf-8");
-    byte rawdata[] = ("query=" + statement).getBytes("utf-8");
+    byte rawdata[] = (getParameterName() + "=" + statement).getBytes("utf-8");
     
     HttpClient httpclient = new DefaultHttpClient();
     HttpPost httppost = new HttpPost(endpoint);
@@ -138,7 +132,6 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     httppost.setEntity(reqbody);
 
     // (2) retrieving the response
-
     HttpResponse response = httpclient.execute(httppost);
     HttpEntity resEntity = response.getEntity();
 
@@ -155,9 +148,13 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
                                         msg);
   }
 
+  protected String getParameterName() {
+    return "update";
+  }
+
   // ===== Writing INSERT-format triples
 
-  public static class InsertHandler implements StatementHandler {
+  public class InsertHandler implements StatementHandler {
     private String targeturi;
     private String graphuri;
     private Writer out;
@@ -275,12 +272,12 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
 
     private void insertBatch() throws IOException {
       log.debug("Posting batch after " + stmts + " statements");
-      doUpdate(targeturi,
-               // http://sourceforge.net/mailarchive/forum.php?thread_name=7DF4AA0F-2DAD-4A58-B3D5-1081CA05D94A%40openlinksw.com&forum_name=virtuoso-users
-               "DEFINE  sql:log-enable 2 " +
-               "insert data into <" + graphuri + "> { " +
-               out.toString() + " }");
+      doUpdate(targeturi, makeInsertStatement(graphuri, out.toString()));
       out = new StringWriter();
     }
+  }
+
+  protected String makeInsertStatement(String graph, String stmts) {
+    return "insert data { graph <" + graph + "> { " + stmts + " } }";
   }
 }
