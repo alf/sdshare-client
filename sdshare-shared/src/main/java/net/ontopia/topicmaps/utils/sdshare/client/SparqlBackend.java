@@ -2,8 +2,11 @@
 package net.ontopia.topicmaps.utils.sdshare.client;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.List;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Date;
 import java.io.Writer;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -161,12 +164,14 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     private Map<String, String> nodelabels;
     private int counter;
     private int stmts;
+    private Set<AResource> changedResources;
 
     public InsertHandler(String targeturi, String graphuri) {
       this.targeturi = targeturi;
       this.graphuri = graphuri;
       this.out = new StringWriter();
       this.nodelabels = new HashMap();
+      this.changedResources = new HashSet();
     }
     
     public void statement(AResource sub, AResource pred, ALiteral lit) {
@@ -178,6 +183,8 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
       } catch (IOException e) {
         throw new SDShareRuntimeException(e);
       }
+
+      changedResources.add(sub);
     }
 
     public void statement(AResource sub, AResource pred, AResource obj) {
@@ -189,9 +196,15 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
       } catch (IOException e) {
         throw new SDShareRuntimeException(e);
       }
+
+      changedResources.add(sub);
     }
 
     public void close() throws IOException {
+      for (AResource sub : changedResources) {
+        updateLastModified(sub);
+      }
+
       insertBatch();
       log.debug("Closed handler, finished inserting");
     }
@@ -201,6 +214,20 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
       stmts++;
       if (stmts % 1000 == 0)
         insertBatch();
+    }
+
+    private void updateLastModified(AResource sub) {
+      String lastModifiedUri = "<http://www.sdshare.org/2012/extension/lastmodified> ";
+      String lastModified = String.format("\"%tFT%<tRZ\"^^xsd:dateTime", new Date());
+
+      try {
+        writeResource(sub);
+        out.write(lastModifiedUri);
+        out.write(lastModified);
+        terminate();
+      } catch (IOException e) {
+        throw new SDShareRuntimeException(e);
+      }
     }
 
     private void writeLiteral(ALiteral lit) throws IOException {
