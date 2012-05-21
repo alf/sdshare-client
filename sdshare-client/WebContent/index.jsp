@@ -1,7 +1,8 @@
 <%@ page 
   language="java" 
   contentType="text/html; charset=utf-8"
-  import="java.text.SimpleDateFormat,
+  import="java.sql.Timestamp,
+          java.text.SimpleDateFormat,
           net.ontopia.utils.StringUtils,
           net.ontopia.topicmaps.utils.sdshare.client.*"
 %><%@ taglib prefix="c"        uri="http://java.sun.com/jsp/jstl/core" %><%!
@@ -14,6 +15,13 @@
       return "&nbsp;";
     else
       return format.format(time);
+  }
+
+  private static String format(Timestamp time) {
+    if (time == null)
+      return "&nbsp;";
+    else
+      return time.toString() + 'Z';
   }
 
 %><%
