@@ -2,10 +2,8 @@
 package net.ontopia.topicmaps.utils.sdshare.client;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.List;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Date;
 import java.io.Writer;
 import java.io.IOException;
@@ -39,7 +37,7 @@ import net.ontopia.topicmaps.utils.rdf.RDFUtils;
  */
 public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
   static Logger log = LoggerFactory.getLogger(SparqlBackend.class.getName());
-  
+
   public void loadSnapshot(SyncEndpoint endpoint, Snapshot snapshot) {
     String graph = snapshot.getFeed().getPrefix();
     String uri = findPreferredLink(snapshot.getLinks()).getUri();
@@ -50,6 +48,10 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
 
     // second, import the snapshot
     insertDataFrom(uri, endpoint.getHandle(), graph);
+
+    // third, update the last modified date of the graph
+    doUpdate(endpoint.getHandle(),
+             makeUpdateLastModifiedStatement(graph, graph));
   }
 
   public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments) {
@@ -67,19 +69,30 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
                                         fragment.getTopicSIs().size() +
                                         " SIs, which we cannot handle");
     String subject = fragment.getTopicSIs().iterator().next();
-    
+
     // first, remove all statements about the current topic
     doUpdate(endpoint.getHandle(),
              makeDeleteStatement(graph, subject));
-    
+
     // second, load new fragment into graph
     insertDataFrom(uri, endpoint.getHandle(), graph);
+
+    // third, update the last modified date of the SI
+    doUpdate(endpoint.getHandle(),
+             makeUpdateLastModifiedStatement(graph, subject));
   }
 
   protected String makeDeleteStatement(String graph, String subject) {
     return "WITH <" + graph + "> " +
            "DELETE { <" + subject +"> ?p ?o } " +
            "WHERE { <" + subject +"> ?p ?o } ";
+  }
+
+  protected String makeUpdateLastModifiedStatement(String graph, String subject) {
+    String now = String.format("\"%tFT%<tRZ\"^^xsd:dateTime", new Date());
+    return
+      "INSERT INTO <" + graph + "> " +
+      "  { <" + subject + "> <http://www.sdshare.org/2012/extension/lastmodified> " + now + " . }";
   }
 
   // ===== Implementation code
@@ -105,26 +118,26 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
       throw new SDShareRuntimeException(e);
     }
   }
-  
-  public void doUpdate(String endpoint, String statement) {    
+
+  public void doUpdate(String endpoint, String statement) {
     try {
       doUpdate_(endpoint, statement);
     } catch (IOException e) {
       throw new SDShareRuntimeException(e);
     }
   }
-  
+
   public void doUpdate_(String endpoint, String statement) throws IOException {
     if (log.isDebugEnabled())
       log.debug("doUpdate: " + statement);
 
     // FIXME: in time we may have to use Keep-Alive so that we don't
     // need to open new TCP connections all the time.
-    
+
     // (1) putting together the request
     statement = URLEncoder.encode(statement, "utf-8");
     byte rawdata[] = (getParameterName() + "=" + statement).getBytes("utf-8");
-    
+
     HttpClient httpclient = new DefaultHttpClient();
     HttpPost httppost = new HttpPost(endpoint);
     ByteArrayEntity reqbody = new ByteArrayEntity(rawdata);
@@ -161,16 +174,14 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     private Map<String, String> nodelabels;
     private int counter;
     private int stmts;
-    private Set<AResource> changedResources;
 
     public InsertHandler(String targeturi, String graphuri) {
       this.targeturi = targeturi;
       this.graphuri = graphuri;
       this.out = new StringWriter();
       this.nodelabels = new HashMap();
-      this.changedResources = new HashSet();
     }
-    
+
     public void statement(AResource sub, AResource pred, ALiteral lit) {
       try {
         writeResource(sub);
@@ -180,8 +191,6 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
       } catch (IOException e) {
         throw new SDShareRuntimeException(e);
       }
-
-      changedResources.add(sub);
     }
 
     public void statement(AResource sub, AResource pred, AResource obj) {
@@ -193,14 +202,9 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
       } catch (IOException e) {
         throw new SDShareRuntimeException(e);
       }
-
-      changedResources.add(sub);
     }
 
     public void close() throws IOException {
-      for (AResource sub : changedResources)
-        updateLastModified(sub);
-
       insertBatch();
       log.debug("Closed handler, finished inserting");
     }
@@ -210,20 +214,6 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
       stmts++;
       if (stmts % 1000 == 0)
         insertBatch();
-    }
-
-    private void updateLastModified(AResource sub) {
-      String lastModifiedUri = "<http://www.sdshare.org/2012/extension/lastmodified> ";
-      String lastModified = String.format("\"%tFT%<tRZ\"^^xsd:dateTime", new Date());
-
-      try {
-        writeResource(sub);
-        out.write(lastModifiedUri);
-        out.write(lastModified);
-        terminate();
-      } catch (IOException e) {
-        throw new SDShareRuntimeException(e);
-      }
     }
 
     private void writeLiteral(ALiteral lit) throws IOException {
@@ -250,7 +240,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
         } else
           tmp[pos++] = ch;
       }
-      
+
       out.write('\"');
       out.write(tmp, 0, pos);
       out.write("\" ");
