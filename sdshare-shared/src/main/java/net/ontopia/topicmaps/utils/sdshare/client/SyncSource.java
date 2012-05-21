@@ -77,7 +77,7 @@ public class SyncSource {
    * are not absolutely sure what order fragments are returned in.
    */
   public void setLastChange(Timestamp lastChange) {
-    if (lastChange.compareTo(this.lastChange) > 0)
+    if (lastChange.after(this.lastChange))
       this.lastChange = lastChange;
   }
 

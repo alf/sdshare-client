@@ -277,6 +277,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
   }
 
   protected String makeInsertStatement(String graph, String stmts) {
-    return "insert data { graph <" + graph + "> { " + stmts + " } }";
+    return "prefix xsd: <http://www.w3.org/2001/XMLSchema#> " +
+           "insert data { graph <" + graph + "> { " + stmts + " } }";
   }
 }

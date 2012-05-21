@@ -340,7 +340,7 @@ public class FeedReaders {
                                      " had no identity");
         
         // check if this is a new fragment, or if we saw it before
-        if (lastChange == null || updated.compareTo(lastChange) > 0) {
+        if (lastChange == null || updated.after(lastChange)) {
           log.trace("New fragment, updated: " + updated + ", last change: " +
                     lastChange);
           
