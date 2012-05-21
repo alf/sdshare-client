@@ -90,9 +90,8 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
 
   protected String makeUpdateLastModifiedStatement(String graph, String subject) {
     String now = String.format("\"%tFT%<tRZ\"^^xsd:dateTime", new Date());
-    return
-      "INSERT INTO <" + graph + "> " +
-      "  { <" + subject + "> <http://www.sdshare.org/2012/extension/lastmodified> " + now + " . }";
+    String stmts = "<" + subject + "> <http://www.sdshare.org/2012/extension/lastmodified> " + now + " .";
+    return makeInsertStatement(graph, stmts);
   }
 
   // ===== Implementation code
