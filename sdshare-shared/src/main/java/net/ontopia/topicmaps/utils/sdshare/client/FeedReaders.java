@@ -11,6 +11,7 @@ import java.util.TimeZone;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.net.MalformedURLException;
+import java.sql.Timestamp;
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -56,47 +57,62 @@ public class FeedReaders {
   private static final String NS_SD = "http://www.egovpt.org/sdshare";
 
   /**
-   * Parses Atom-compatible date-time string and returns value as millisecs
-   * since epoch (same as System.currentTimeMillis()).
+   * Parses Atom-compatible date-time string and returns value as Timestamp
    */
-  public static long parseDateTime(String date) {
+  public static Timestamp parseDateTime(String date) {
     if (date.endsWith("Z"))
-      return oneOf(date, format_wo_tz, format_precise_wo_tz);
+      return parseDateTime_(date);
     else
       return oneOf(date, format_with_tz, format_precise_with_tz);
   }
 
-  private static long oneOf(String date, SimpleDateFormat f1, 
-                            SimpleDateFormat f2) {
+  private static Timestamp oneOf(String date, SimpleDateFormat f1, 
+                                 SimpleDateFormat f2) {
+    long millis = -1;
+    
     try {
-      return f1.parse(date).getTime();
+      millis = f1.parse(date).getTime();
     } catch (ParseException e) {
       // this means we couldn't parse it with f1, so we try f2. if
       // that fails we leave this method on that ParseException,
       // which is fine.
       try {
-        return f2.parse(date).getTime();
+        millis = f2.parse(date).getTime();
       } catch (ParseException e2) {
         throw new SDShareRuntimeException("Couldn't parse date '" +
                                           date + "'", e2);
       }
     }
+
+    return new Timestamp(millis);
+  }
+
+  private static Timestamp parseDateTime_(String date) {
+    String tmp = date.substring(0, date.length() - 1).replace('T', ' ');
+    return Timestamp.valueOf(tmp);
+  }
+
+  public static String format(Timestamp time) {
+    String tmp = time.toString();
+    if (tmp.endsWith(".0"))
+      tmp = tmp.substring(0, tmp.length() - 2);
+    return tmp.replace(' ', 'T') + 'Z';
   }
   
   public static FragmentFeed readFragmentFeed(String filename_or_url)
     throws IOException, SAXException {
-    return readFragmentFeed(filename_or_url, 0);
+    return readFragmentFeed(filename_or_url, null);
   }
 
   public static FragmentFeed readFragmentFeed(String filename_or_url,
-                                              long lastChange)
+                                              Timestamp lastChange)
     throws IOException, SAXException {
     // TODO: we should support if-modified-since
     String uri = URIUtils.getURI(filename_or_url).getExternalForm();
 
-    if (uri.startsWith("http://") && lastChange > 0) {
+    if (uri.startsWith("http://") && lastChange != null) {
       // need to add 'since' parameter
-      String datetime = format_wo_tz.format(new Date(lastChange));
+      String datetime = format(lastChange);
       if (uri.indexOf('?') == -1)
         uri += "?since=" + datetime;
       else
@@ -164,7 +180,7 @@ public class FeedReaders {
     protected boolean keep;       // whether to keep text content
     protected StringBuilder buf;  // accumulating buffer
     protected boolean inEntry;
-    protected long updated;       // content of last <updated>
+    protected Timestamp updated;  // content of last <updated>
 
     public AbstractFeedReader(String feedurl) {
       try {
@@ -193,7 +209,7 @@ public class FeedReaders {
     public void endElement(String uri, String name, String qname) {
       if (uri.equals(NS_ATOM) && name.equals("entry")) {
         inEntry = false;
-        updated = -1;
+        updated = null;
 
       } else if (uri.equals(NS_ATOM) && name.equals("updated"))
         updated = parseDateTime(buf.toString());
@@ -212,7 +228,7 @@ public class FeedReaders {
    */
   private static class FragmentFeedReader extends AbstractFeedReader {
     protected FragmentFeed feed;
-    protected long lastChange;
+    protected Timestamp lastChange;
 
     // SAX tracking
     protected Set<AtomLink> links; // links in current entry
@@ -223,7 +239,7 @@ public class FeedReaders {
     protected String content;      // contents of <content>
     protected String id;           // contents of <id>
 
-    public FragmentFeedReader(String feedurl, long lastChange) {
+    public FragmentFeedReader(String feedurl, Timestamp lastChange) {
       super(feedurl);
       this.lastChange = lastChange;
       this.feed = new FragmentFeed();
@@ -317,14 +333,14 @@ public class FeedReaders {
         if (links.size() < 1 && content == null)
           throw new RuntimeException("Fragment entry had no suitable links " +
                                      "and no content");
-        if (updated == -1)
+        if (updated == null)
           throw new RuntimeException("Fragment entry had no updated field");
         if (sis.isEmpty() && sls.isEmpty() && iis.isEmpty())
           throw new RuntimeException("Fragment entry with id "+ id +
                                      " had no identity");
         
         // check if this is a new fragment, or if we saw it before
-        if (updated > lastChange) {
+        if (lastChange == null || updated.compareTo(lastChange) > 0) {
           log.trace("New fragment, updated: " + updated + ", last change: " +
                     lastChange);
           
@@ -459,7 +475,7 @@ public class FeedReaders {
     private StringWriter tmp;
 
     public PostFeedReader() {
-      super(null, 0);
+      super(null, null);
     }
     
     public void startElement(String uri, String name, String qname,

@@ -4,6 +4,7 @@ package net.ontopia.topicmaps.utils.sdshare.client;
 import java.util.Iterator;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.sql.Timestamp;
 
 import net.ontopia.utils.SDShareRuntimeException;
 
@@ -25,9 +26,9 @@ public class SyncSource {
   private long lastCheck;
   /**
    * The timestamp on the last change processed from this source, as given
-   * by the server. In milliseconds since epoch.
+   * by the server.
    */
-  private long lastChange;
+  private Timestamp lastChange;
   private boolean active;
   /**
    * Number of fragments returned by this source since we booted.
@@ -66,8 +67,8 @@ public class SyncSource {
    * Returns the timestamp of the last change processed from this
    * source, as given in the Atom feed.
    */
-  public long getLastChange() {
-    return this.lastChange;
+  public Timestamp getLastChange() {
+    return lastChange;
   }
 
   /**
@@ -75,8 +76,8 @@ public class SyncSource {
    * later than the latest one seen so far. The rationale is that we
    * are not absolutely sure what order fragments are returned in.
    */
-  public void setLastChange(long lastChange) {
-    if (lastChange > this.lastChange)
+  public void setLastChange(Timestamp lastChange) {
+    if (lastChange.compareTo(this.lastChange) > 0)
       this.lastChange = lastChange;
   }
 

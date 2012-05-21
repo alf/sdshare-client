@@ -3,6 +3,7 @@ package net.ontopia.topicmaps.utils.sdshare.client;
 
 import java.util.Iterator;
 import java.io.IOException;
+import java.sql.Timestamp;
 import org.xml.sax.SAXException;
 
 /**
@@ -26,7 +27,7 @@ public class AtomFrontend implements ClientFrontendIF {
     return FeedReaders.readSnapshotFeed(feedurl);
   }
 
-  public Iterator<FragmentFeed> getFragmentFeeds(long lastChange)
+  public Iterator<FragmentFeed> getFragmentFeeds(Timestamp lastChange)
     throws IOException, SAXException {
     String feedurl = getFeed().getFragmentFeed();
     return new FeedIterator(FeedReaders.readFragmentFeed(feedurl, lastChange));

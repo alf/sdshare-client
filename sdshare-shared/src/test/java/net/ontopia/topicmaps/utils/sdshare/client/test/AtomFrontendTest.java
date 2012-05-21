@@ -25,7 +25,7 @@ public class AtomFrontendTest extends AbstractOntopiaTestCase {
     AtomFrontend frontend = new AtomFrontend(file);
     assertEquals("wrong handle", file, frontend.getHandle());
 
-    Iterator<FragmentFeed> it = frontend.getFragmentFeeds(0);
+    Iterator<FragmentFeed> it = frontend.getFragmentFeeds(null);
     FragmentFeed feed = it.next();
 
     // this feed is already tested in FeedReadersTest.testFragmentFeed1.
@@ -71,7 +71,7 @@ public class AtomFrontendTest extends AbstractOntopiaTestCase {
     AtomFrontend frontend = new AtomFrontend(file);
     assertEquals("wrong handle", file, frontend.getHandle());
 
-    Iterator<FragmentFeed> it = frontend.getFragmentFeeds(0);
+    Iterator<FragmentFeed> it = frontend.getFragmentFeeds(null);
 
     // this feed is already tested in FeedReadersTest.  just repeating
     // a minimal amount of testing here.

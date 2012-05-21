@@ -34,8 +34,8 @@ import net.ontopia.topicmaps.utils.rdf.RDFUtils;
 /**
  * INTERNAL: Backend which uses SPARQL to update an RDF triple store.
  * This class implements the 2012-01-05 SPARQL working drafts from the
- * W3C. A separate subclass implements the dialect supported by
- * Virtuoso.
+ * W3C.  A separate subclass implements the dialect supported by
+ * Virtuoso.  There's another for Joseki.
  */
 public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
   static Logger log = LoggerFactory.getLogger(SparqlBackend.class.getName());
@@ -198,9 +198,8 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     }
 
     public void close() throws IOException {
-      for (AResource sub : changedResources) {
+      for (AResource sub : changedResources)
         updateLastModified(sub);
-      }
 
       insertBatch();
       log.debug("Closed handler, finished inserting");

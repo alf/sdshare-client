@@ -58,7 +58,7 @@ public class JDBCQueueBackendTest extends AbstractOntopiaTestCase {
     
     List<Fragment> fragments = new ArrayList<Fragment>();
     AtomLink l = new AtomLink(new MIMEType("application/rdf+xml"), LINK);
-    Fragment f = new Fragment(Collections.singleton(l), 0, null);
+    Fragment f = new Fragment(Collections.singleton(l), null, null);
     f.setTopicSIs(Collections.singleton(PSI));
     fragments.add(f);
     backend.applyFragments(endpoint, fragments);
@@ -79,7 +79,7 @@ public class JDBCQueueBackendTest extends AbstractOntopiaTestCase {
     Set<AtomLink> links = new HashSet();
     links.add(new AtomLink(new MIMEType("application/rdf+xml"), LINK1));
     links.add(new AtomLink(new MIMEType("text/xtm"), LINK2));
-    Fragment f = new Fragment(links, 0, null);
+    Fragment f = new Fragment(links, null, null);
     f.setTopicSIs(Collections.singleton(PSI));
     fragments.add(f);
     backend.applyFragments(endpoint, fragments);

@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.TimeZone;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 
 import org.xml.sax.XMLReader;
 import org.xml.sax.DTDHandler;
@@ -23,11 +22,6 @@ import net.ontopia.topicmaps.utils.sdshare.client.*;
 import net.ontopia.xml.XMLReaderFactoryIF;
 
 public class FeedReaderTest extends AbstractOntopiaTestCase {
-  private static final SimpleDateFormat format_wo_tz =
-    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-  static {
-    format_wo_tz.setTimeZone(TimeZone.getTimeZone("Z"));    
-  }
   
   public FeedReaderTest(String name) {
     super(name);
@@ -49,7 +43,7 @@ public class FeedReaderTest extends AbstractOntopiaTestCase {
     return FeedReaders.readPostFeed(new FileReader(file));
   }
 
-  public void doSinceTest(String baseurl, long thetime, String finalurl)
+  public void doSinceTest(String baseurl, Timestamp thetime, String finalurl)
     throws IOException, SAXException {
     FakeXMLReader our = new FakeXMLReader();
     XMLReaderFactoryIF orig = FeedReaders.parserfactory;
@@ -230,28 +224,69 @@ public class FeedReaderTest extends AbstractOntopiaTestCase {
 
   public void testFragmentSince() throws Exception {
     String timestring = "2011-03-24T10:04:02Z";
-    long thetime = format_wo_tz.parse(timestring).getTime();
+    Timestamp thetime = FeedReaders.parseDateTime(timestring);
     String baseurl = "http://www.example.org/sdshare/fragments";
     doSinceTest(baseurl, thetime, baseurl + "?since=" + timestring);
   }
 
   public void testFragmentSinceFile() throws Exception {
     String timestring = "2011-03-24T10:04:02Z";
-    long thetime = format_wo_tz.parse(timestring).getTime();
+    Timestamp thetime = FeedReaders.parseDateTime(timestring);
     String baseurl = "file://Users/larsga/sdshare/fragments.xml";
     doSinceTest(baseurl, thetime, baseurl);
   }
 
   public void testFragmentSinceNoTime() throws Exception {
     String baseurl = "http://www.example.org/sdshare/fragments";
-    doSinceTest(baseurl, 0, baseurl);
+    doSinceTest(baseurl, null, baseurl);
   }
 
   public void testFragmentSinceParamsAlready() throws Exception {
     String timestring = "2011-03-24T10:04:02Z";
-    long thetime = format_wo_tz.parse(timestring).getTime();
+    Timestamp thetime = FeedReaders.parseDateTime(timestring);
     String baseurl = "http://www.example.org/sdshare/fragments?tm=x.xtm";
     doSinceTest(baseurl, thetime, baseurl + "&since=" + timestring);
+  }
+
+  // ===== DATE/TIME TESTING
+
+  // "2002-05-22T22:13:21Z" -> 1022098401.000
+  // "2002-05-22T22:13:21.380Z" -> 1022098401.380
+  // "2002-05-22T22:13:21.380123456Z" -> 1022098401.380123456
+  
+  public void testTimeParser() {
+    Timestamp correct = new Timestamp(1022098401000L);
+    Timestamp parsed = FeedReaders.parseDateTime("2002-05-22T22:13:21Z");
+    assertEquals(correct, parsed);
+  }
+
+  public void testTimeParser2() {
+    Timestamp correct = new Timestamp(1022098401380L);
+    Timestamp parsed = FeedReaders.parseDateTime("2002-05-22T22:13:21.380Z");
+    assertEquals(correct, parsed);
+  }
+
+  public void testTimeParser3() {
+    Timestamp correct = new Timestamp(1022098401000L);
+    correct.setNanos(380123456);
+    Timestamp parsed = FeedReaders.parseDateTime("2002-05-22T22:13:21.380123456Z");
+    assertEquals(correct, parsed);
+  }
+  
+  public void testTimeFormatter() {
+    Timestamp origin = new Timestamp(1022098401000L);
+    assertEquals("2002-05-22T22:13:21Z", FeedReaders.format(origin));
+  }
+
+  public void testTimeFormatter2() {
+    Timestamp origin = new Timestamp(1022098401380L);
+    assertEquals("2002-05-22T22:13:21.38Z", FeedReaders.format(origin));
+  }
+
+  public void testTimeFormatter3() {
+    Timestamp origin = new Timestamp(1022098401000L);
+    origin.setNanos(380123456);
+    assertEquals("2002-05-22T22:13:21.380123456Z", FeedReaders.format(origin));
   }
   
   // ===== FAKE XML READER =====

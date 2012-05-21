@@ -2,12 +2,13 @@
 package net.ontopia.topicmaps.utils.sdshare.client;
 
 import java.util.Set;
+import java.sql.Timestamp;
 
 /**
  * PUBLIC: Represents an entry in a snapshot feed.
  */
 public class Snapshot {
-  private long timestamp;
+  private Timestamp timestamp;
   private SnapshotFeed feed;
   private Set<AtomLink> links;
 
@@ -23,11 +24,11 @@ public class Snapshot {
     this.links = links;
   }
 
-  public long getUpdated() {
+  public Timestamp getUpdated() {
     return timestamp;
   }
 
-  public void setUpdated(long timestamp) {
+  public void setUpdated(Timestamp timestamp) {
     this.timestamp = timestamp;
   }
 

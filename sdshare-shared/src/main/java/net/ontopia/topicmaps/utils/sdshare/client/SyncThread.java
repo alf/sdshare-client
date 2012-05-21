@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.sql.Timestamp;
 import org.xml.sax.SAXException;
 
 import org.slf4j.Logger;
@@ -117,7 +118,7 @@ class SyncThread extends Thread {
     log.info("Getting snapshots for " + endpoint.getHandle());
     for (SyncSource source : endpoint.getSources()) {
       Snapshot snapshot = endpoint.loadSnapshot(source);
-      backend.loadSnapshot(endpoint, snapshot);
+      thebackend.loadSnapshot(endpoint, snapshot);
     }
   }
 
@@ -222,7 +223,7 @@ class SyncThread extends Thread {
 
         SyncSource source = getSource(row[0] + " " + row[1]);
         if (source != null) {
-          long last = Long.parseLong(row[2]);
+          Timestamp last = Timestamp.valueOf(row[2]);
           source.setLastChange(last);
         }
         line = in.readLine();
