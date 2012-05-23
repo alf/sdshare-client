@@ -108,7 +108,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
   }
 
   public void insertDataFrom(String sourceuri, String targeturi,
-                                    String graphuri) {
+                             String graphuri) {
     InsertHandler handler = new InsertHandler(targeturi, graphuri);
     try {
       RDFUtils.parseRDFXML(sourceuri, handler);
@@ -150,11 +150,14 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     if (log.isDebugEnabled())
       log.debug("Server response: " + response.getStatusLine());
 
-    String msg = StreamUtils.read(new InputStreamReader(resEntity.getContent()));
+    String msg = null;
+    if (resEntity != null) // there may not be any response
+      msg = StreamUtils.read(new InputStreamReader(resEntity.getContent()));
     if (log.isDebugEnabled())
       log.debug("Body: " + msg);
 
-    if (response.getStatusLine().getStatusCode() != 200)
+    if (response.getStatusLine().getStatusCode() > 299)
+      // all 2xx response codes are OK, says the 2012-01-05 spec (2.2.4)
       throw new SDShareRuntimeException("Error sending SPARQL query: " +
                                         response.getStatusLine() + " " +
                                         msg);
