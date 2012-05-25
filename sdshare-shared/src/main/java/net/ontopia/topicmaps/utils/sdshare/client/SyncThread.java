@@ -121,6 +121,8 @@ class SyncThread extends Thread {
       thebackend.loadSnapshot(endpoint, snapshot);
       source.setLastChange(snapshot.getUpdated());
     }
+
+    save();
   }
 
   /**
@@ -224,7 +226,7 @@ class SyncThread extends Thread {
 
         SyncSource source = getSource(row[0] + " " + row[1]);
         if (source != null) {
-          Timestamp last = Timestamp.valueOf(row[2]);
+          Timestamp last = Timestamp.valueOf(row[2] + ' ' + row[3]);
           source.setLastChange(last);
         }
         line = in.readLine();
