@@ -60,7 +60,7 @@ public class ClientManager {
 
   public void loadSnapshot(SyncSource source) throws IOException, SAXException {
     SyncEndpoint endpoint = source.getEndpoint();
-    thread.loadSnapshot(endpoint);
+    thread.loadSnapshot(endpoint, source);
   }  
   
   public void sync() throws IOException, SAXException {

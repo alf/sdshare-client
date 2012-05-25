@@ -125,6 +125,22 @@ class SyncThread extends Thread {
     save();
   }
 
+  public void loadSnapshot(SyncEndpoint endpoint, SyncSource source)
+    throws IOException, SAXException {
+    ClientBackendIF thebackend = endpoint.getBackend();
+    if (thebackend == null)
+      thebackend = backend;
+    
+    log.info("Getting snapshot for " + endpoint.getHandle() + " from " +
+             source);
+
+    Snapshot snapshot = endpoint.loadSnapshot(source);
+    thebackend.loadSnapshot(endpoint, snapshot);
+    source.setLastChange(snapshot.getUpdated());
+
+    save();
+  }
+  
   /**
    * Syncs all sources into their endpoints if it is time to check and
    * they are not blocked by errors.

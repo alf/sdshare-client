@@ -39,6 +39,10 @@ public class AtomFrontend implements ClientFrontendIF {
     return feed;
   }
 
+  public String toString() {
+    return "[AtomFrontend " + handle + "]";
+  }
+
   // --- Iterator implementation
   // this exists so we can handle paging
 

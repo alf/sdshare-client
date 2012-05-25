@@ -144,6 +144,10 @@ public class SyncSource {
     this.endpoint = endpoint;
   }
 
+  public String toString() {
+    return "[SyncSource " + frontend + "]";
+  }
+
   private ClientFrontendIF instantiate(String handle, String klass) {
     try {
       Class theklass = Class.forName(klass);
