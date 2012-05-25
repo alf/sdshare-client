@@ -34,6 +34,9 @@ import net.ontopia.topicmaps.utils.rdf.RDFUtils;
  * This class implements the 2012-01-05 SPARQL working drafts from the
  * W3C.  A separate subclass implements the dialect supported by
  * Virtuoso.  There's another for Joseki.
+ *
+ * <p>This class, and its subclasses, has now been verified to work
+ * with Virtuoso, Oracle RDF (via Joseki), and OWLIM (via Sesame).
  */
 public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
   static Logger log = LoggerFactory.getLogger(SparqlBackend.class.getName());

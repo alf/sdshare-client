@@ -119,6 +119,7 @@ class SyncThread extends Thread {
     for (SyncSource source : endpoint.getSources()) {
       Snapshot snapshot = endpoint.loadSnapshot(source);
       thebackend.loadSnapshot(endpoint, snapshot);
+      source.setLastChange(snapshot.getUpdated());
     }
   }
 
