@@ -50,11 +50,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
              "clear graph <" + graph + ">");
 
     // second, import the snapshot
-    insertDataFrom(uri, endpoint.getHandle(), graph);
-
-    // third, update the last modified date of the graph
-    doUpdate(endpoint.getHandle(),
-             makeUpdateLastModifiedStatement(graph, graph));
+    insertDataFrom(uri, endpoint.getHandle(), graph, graph);
   }
 
   public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments) {
@@ -78,11 +74,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
              makeDeleteStatement(graph, subject));
 
     // second, load new fragment into graph
-    insertDataFrom(uri, endpoint.getHandle(), graph);
-
-    // third, update the last modified date of the SI
-    doUpdate(endpoint.getHandle(),
-             makeUpdateLastModifiedStatement(graph, subject));
+    insertDataFrom(uri, endpoint.getHandle(), graph, subject);
   }
 
   protected String makeDeleteStatement(String graph, String subject) {
@@ -111,10 +103,11 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
   }
 
   public void insertDataFrom(String sourceuri, String targeturi,
-                             String graphuri) {
+                             String graphuri, String subjecturi) {
     InsertHandler handler = new InsertHandler(targeturi, graphuri);
     try {
       RDFUtils.parseRDFXML(sourceuri, handler);
+      handler.updateLastModified(subjecturi);
       handler.close();
     } catch (IOException e) {
       throw new SDShareRuntimeException(e);
@@ -209,6 +202,16 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
       }
     }
 
+    public void updateLastModified(String subjecturi) {
+      try {
+        String statement = makeUpdateLastModifiedStatement(graphuri, subjecturi);
+        out.write(statement);
+        handleStatementAdded();
+      } catch (IOException e) {
+        throw new SDShareRuntimeException(e);
+      }
+    }
+
     public void close() throws IOException {
       insertBatch();
       log.debug("Closed handler, finished inserting");
@@ -216,6 +219,10 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
 
     private void terminate() throws IOException {
       out.write(".");
+      handleStatementAdded();
+    }
+
+    private void handleStatementAdded() throws IOException {
       stmts++;
       if (stmts % 1000 == 0)
         insertBatch();
